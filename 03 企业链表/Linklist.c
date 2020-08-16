@@ -37,12 +37,44 @@ void Insert_LinkList(LinkList* list, int pos, LinkNode* data) {
 
 // 删除节点:
 void Remove_LinkList(LinkList* list, int pos) {
+	if (list == NULL) {
+		return;
+	}
 
+	if (pos < 0 || pos >= list->size){
+		return;
+	}
+	// 辅助指针:
+	LinkNode* p = &(list->head);
+	for (int i = 0; i < pos; i++) {
+		p = p->next;
+	}
+	// 删除节点:
+	p->next = p->next->next;
+	list->size--;
 }
 
 // 查找节点:
-int Find_LinkList(LinkList* list, LinkNode* data) {
-	return 0;
+int Find_LinkList(LinkList* list, LinkNode* data, COMPARENODE compare) {
+	if (list == NULL) {
+		return;
+	}
+	if (data == NULL) {
+		return;
+	}
+	// 辅助指针:
+	LinkNode* p = list->head.next;
+	int index = 0;
+	int flag = -1;
+	while (p != NULL) {
+		if (compare(p, data) == 0) {
+			flag = index;
+			break;
+		}
+		p = p->next;
+		index++;
+	}
+	return flag;
 }
 
 // 返回链表的大小:
